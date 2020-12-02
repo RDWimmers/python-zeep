@@ -35,8 +35,16 @@ class ListType(AnySimpleType):
         assert xsd_type is None
         node.text = self.xmlvalue(value)
 
+#     def resolve(self):
+#         self.item_type = self.item_type.resolve()
+#         self.base_class = self.item_type.__class__
+#         return self
+    
     def resolve(self):
-        self.item_type = self.item_type.resolve()
+        try:
+            self.item_type = self.item_type.resolve()
+        except Exception:
+            print("No resolve method for {}".format(self.item_type))
         self.base_class = self.item_type.__class__
         return self
 
